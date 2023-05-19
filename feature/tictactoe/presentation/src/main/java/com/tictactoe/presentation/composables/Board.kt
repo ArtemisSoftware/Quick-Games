@@ -14,14 +14,15 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun Board(
-    boardSize: Dp = 300.dp,
+    boardSize: Dp,
     modifier: Modifier = Modifier,
     divisionColor: Color = Color.Gray,
 ) {
     Canvas(
         modifier = Modifier
             .size(boardSize)
-            .padding(10.dp).then(modifier),
+            .padding(10.dp)
+            .then(modifier),
     ) {
         drawLine(
             color = divisionColor,
@@ -56,6 +57,6 @@ fun Board(
 
 @Preview(showBackground = true)
 @Composable
-fun BoardPreview() {
-    Board()
+private fun BoardPreview() {
+    Board(boardSize = 300.dp)
 }
