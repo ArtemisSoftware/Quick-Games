@@ -15,3 +15,4 @@ dependencyResolutionManagement {
 rootProject.name = "QuickGames"
 include ':app'
 include ':feature:tictactoe:presentation'
+include ':feature:tictactoe:domain'
