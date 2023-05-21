@@ -33,7 +33,7 @@ fun Circle(
     }
 }
 
-fun DrawScope.circle_(
+fun DrawScope.circle(
     color: Color,
     center: Offset,
     size: Size = Size(50.dp.toPx(), 50.dp.toPx())
@@ -49,10 +49,15 @@ fun DrawScope.circle_(
 @Preview(showBackground = true)
 @Composable
 private fun CirclePreview() {
-//    Circle(size = 60.dp)
+    Circle(size = 60.dp)
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun DrawCirclePreview() {
     Canvas(
         modifier = Modifier.size(300.dp)
     ) {
-        circle_(color = Color.Blue, Offset(150F, 150F))
+        circle(color = Color.Blue, Offset(150F, 150F))
     }
 }

@@ -43,7 +43,7 @@ fun Cross(
     }
 }
 
-fun DrawScope.cross_(
+fun DrawScope.cross(
     color: Color,
     center: Offset,
     size: Size = Size(50.dp.toPx(), 50.dp.toPx())
@@ -79,11 +79,17 @@ fun DrawScope.cross_(
 @Preview(showBackground = true)
 @Composable
 private fun CrossPreview() {
+    Cross(crossSize = 60.dp)
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun DrawCrossPreview() {
     //Cross(crossSize = 60.dp)
 
     Canvas(
         modifier = Modifier.size(300.dp)
     ) {
-        cross_(color = Color.Blue, Offset(150F, 150F))
+        cross(color = Color.Blue, Offset(150F, 150F))
     }
 }

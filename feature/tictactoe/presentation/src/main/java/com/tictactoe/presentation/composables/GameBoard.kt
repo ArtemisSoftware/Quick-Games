@@ -1,6 +1,7 @@
 package com.tictactoe.presentation.composables
 
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -19,7 +20,8 @@ fun GameBoard(
 //    onTapInField: (x: Int, y: Int) -> Unit
 ) {
     Canvas(
-        modifier = modifier,
+        modifier = modifier
+            .padding(10.dp),
 //            .pointerInput(true) {
 //                detectTapGestures {
 //                    val x = (3 * it.x.toInt() / size.width)
@@ -39,10 +41,10 @@ fun GameBoard(
 
                 when (move) {
                     MoveType.X -> {
-                        cross_(color = xColor, offset)
+                        cross(color = xColor, offset)
                     }
                     MoveType.O -> {
-                        circle_(color = oColor, offset)
+                        circle(color = oColor, offset)
                     }
                     null -> {}
                 }

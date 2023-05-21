@@ -1,11 +1,11 @@
 package com.tictactoe.domain
 
-sealed class Player(val alias: String) {
+sealed class Player(val alias: String, moveType: MoveType) {
 
-    data class Human(val name: String) : Player(alias = name)
-    data class Cpu(val name: String) : Player(alias = name)
+    data class Human(val name: String, val move: MoveType) : Player(alias = name, moveType = move)
+    data class Cpu(val name: String) : Player(alias = name, moveType = MoveType.X)
 
     companion object {
-        val mockPlayer = Player.Human(name = "Sagat")
+        val mockPlayer = Player.Human(name = "Sagat", move = MoveType.O)
     }
 }
