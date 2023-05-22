@@ -1,6 +1,6 @@
-package com.tictactoe.presentation.composables.models
+package com.tictactoe.domain.models
 
-enum class LinePosition {
+enum class VictoryType {
 
     HORIZONTAL_TOP, HORIZONTAL_MIDDLE, HORIZONTAL_BOTTOM,
     VERTICAL_LEFT, VERTICAL_MIDDLE, VERTICAL_RIGHT,

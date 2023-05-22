@@ -37,15 +37,16 @@ class TicTacToeViewModel constructor() : ViewModel() {
     }
 
     private fun playMove(x: Int, y: Int) = with(_state) {
-        update {
-            val newMoveSet = it.movesPlayed.clone()
-            newMoveSet[y][x] = it.currentPlayer?.moveType
-            it.copy(
-                movesPlayed = newMoveSet,
-            )
+        if (value.movesPlayed[y][x] == null) {
+            update {
+                val newMoveSet = it.movesPlayed.clone()
+                newMoveSet[y][x] = it.currentPlayer?.moveType
+                it.copy(
+                    movesPlayed = newMoveSet,
+                )
+            }
+            changeTurn()
         }
-
-        changeTurn()
     }
 
     private fun restartGame() = with(_state) {

@@ -11,11 +11,11 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.tictactoe.presentation.composables.models.LinePosition
+import com.tictactoe.domain.models.VictoryType
 
 @Composable
 fun WinLine(
-    linePosition: LinePosition,
+    victoryType: VictoryType,
     boardSize: Dp,
     color: Color = Color.Red,
 ) {
@@ -24,82 +24,82 @@ fun WinLine(
             color = color,
             strokeWidth = 10f,
             cap = StrokeCap.Round,
-            start = getStart(linePosition = linePosition, size = size),
-            end = getEnd(linePosition = linePosition, size = size),
+            start = getStart(victoryType = victoryType, size = size),
+            end = getEnd(victoryType = victoryType, size = size),
         )
     }
 }
 
-private fun getStart(linePosition: LinePosition, size: Size): Offset {
-    return when (linePosition) {
-        LinePosition.HORIZONTAL_TOP -> Offset(x = 0f, y = size.height * 1 / 6)
-        LinePosition.HORIZONTAL_MIDDLE -> Offset(x = 0f, y = size.height * 3 / 6)
-        LinePosition.HORIZONTAL_BOTTOM -> Offset(x = 0f, y = size.height * 5 / 6)
-        LinePosition.VERTICAL_LEFT -> Offset(x = size.width * 1 / 6, y = 0f)
-        LinePosition.VERTICAL_MIDDLE -> Offset(x = size.width * 3 / 6, y = 0f)
-        LinePosition.VERTICAL_RIGHT -> Offset(x = size.width * 5 / 6, y = 0f)
-        LinePosition.DIAGONAL_RIGHT -> Offset(x = 0f, y = 0f)
-        LinePosition.DIAGONAL_LEFT -> Offset(x = 0f, y = size.height)
+private fun getStart(victoryType: VictoryType, size: Size): Offset {
+    return when (victoryType) {
+        VictoryType.HORIZONTAL_TOP -> Offset(x = 0f, y = size.height * 1 / 6)
+        VictoryType.HORIZONTAL_MIDDLE -> Offset(x = 0f, y = size.height * 3 / 6)
+        VictoryType.HORIZONTAL_BOTTOM -> Offset(x = 0f, y = size.height * 5 / 6)
+        VictoryType.VERTICAL_LEFT -> Offset(x = size.width * 1 / 6, y = 0f)
+        VictoryType.VERTICAL_MIDDLE -> Offset(x = size.width * 3 / 6, y = 0f)
+        VictoryType.VERTICAL_RIGHT -> Offset(x = size.width * 5 / 6, y = 0f)
+        VictoryType.DIAGONAL_RIGHT -> Offset(x = 0f, y = 0f)
+        VictoryType.DIAGONAL_LEFT -> Offset(x = 0f, y = size.height)
     }
 }
 
-private fun getEnd(linePosition: LinePosition, size: Size): Offset {
-    return when (linePosition) {
-        LinePosition.HORIZONTAL_TOP -> Offset(x = size.width, y = size.height * 1 / 6)
-        LinePosition.HORIZONTAL_MIDDLE -> Offset(x = size.width, y = size.height * 3 / 6)
-        LinePosition.HORIZONTAL_BOTTOM -> Offset(x = size.width, y = size.height * 5 / 6)
-        LinePosition.VERTICAL_LEFT -> Offset(x = size.width * 1 / 6, y = size.height)
-        LinePosition.VERTICAL_MIDDLE -> Offset(x = size.width * 3 / 6, y = size.height)
-        LinePosition.VERTICAL_RIGHT -> Offset(x = size.width * 5 / 6, y = size.height)
-        LinePosition.DIAGONAL_RIGHT -> Offset(x = size.width, y = size.height)
-        LinePosition.DIAGONAL_LEFT -> Offset(x = size.width, y = 0f)
+private fun getEnd(victoryType: VictoryType, size: Size): Offset {
+    return when (victoryType) {
+        VictoryType.HORIZONTAL_TOP -> Offset(x = size.width, y = size.height * 1 / 6)
+        VictoryType.HORIZONTAL_MIDDLE -> Offset(x = size.width, y = size.height * 3 / 6)
+        VictoryType.HORIZONTAL_BOTTOM -> Offset(x = size.width, y = size.height * 5 / 6)
+        VictoryType.VERTICAL_LEFT -> Offset(x = size.width * 1 / 6, y = size.height)
+        VictoryType.VERTICAL_MIDDLE -> Offset(x = size.width * 3 / 6, y = size.height)
+        VictoryType.VERTICAL_RIGHT -> Offset(x = size.width * 5 / 6, y = size.height)
+        VictoryType.DIAGONAL_RIGHT -> Offset(x = size.width, y = size.height)
+        VictoryType.DIAGONAL_LEFT -> Offset(x = size.width, y = 0f)
     }
 }
 
 @Preview(showBackground = true)
 @Composable
 private fun WinLineHorizontalTopPreview() {
-    WinLine(linePosition = LinePosition.HORIZONTAL_TOP, boardSize = 300.dp)
+    WinLine(victoryType = VictoryType.HORIZONTAL_TOP, boardSize = 300.dp)
 }
 
 @Preview(showBackground = true)
 @Composable
 private fun WinLineHorizontalMiddlePreview() {
-    WinLine(linePosition = LinePosition.HORIZONTAL_MIDDLE, boardSize = 300.dp)
+    WinLine(victoryType = VictoryType.HORIZONTAL_MIDDLE, boardSize = 300.dp)
 }
 
 @Preview(showBackground = true)
 @Composable
 private fun WinLineHorizontalBottomPreview() {
-    WinLine(linePosition = LinePosition.HORIZONTAL_BOTTOM, boardSize = 300.dp)
+    WinLine(victoryType = VictoryType.HORIZONTAL_BOTTOM, boardSize = 300.dp)
 }
 
 @Preview(showBackground = true)
 @Composable
 private fun WinLineVerticalLeftPreview() {
-    WinLine(linePosition = LinePosition.VERTICAL_LEFT, boardSize = 300.dp)
+    WinLine(victoryType = VictoryType.VERTICAL_LEFT, boardSize = 300.dp)
 }
 
 @Preview(showBackground = true)
 @Composable
 private fun WinLineVerticalMiddlePreview() {
-    WinLine(linePosition = LinePosition.VERTICAL_MIDDLE, boardSize = 300.dp)
+    WinLine(victoryType = VictoryType.VERTICAL_MIDDLE, boardSize = 300.dp)
 }
 
 @Preview(showBackground = true)
 @Composable
 private fun WinLineVerticalRightPreview() {
-    WinLine(linePosition = LinePosition.VERTICAL_RIGHT, boardSize = 300.dp)
+    WinLine(victoryType = VictoryType.VERTICAL_RIGHT, boardSize = 300.dp)
 }
 
 @Preview(showBackground = true)
 @Composable
 private fun WinLineDiagonalRightPreview() {
-    WinLine(linePosition = LinePosition.DIAGONAL_RIGHT, boardSize = 300.dp)
+    WinLine(victoryType = VictoryType.DIAGONAL_RIGHT, boardSize = 300.dp)
 }
 
 @Preview(showBackground = true)
 @Composable
 private fun WinLineDiagonalLeftPreview() {
-    WinLine(linePosition = LinePosition.DIAGONAL_LEFT, boardSize = 300.dp)
+    WinLine(victoryType = VictoryType.DIAGONAL_LEFT, boardSize = 300.dp)
 }
