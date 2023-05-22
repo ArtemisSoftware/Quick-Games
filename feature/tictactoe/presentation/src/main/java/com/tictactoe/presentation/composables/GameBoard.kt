@@ -1,12 +1,14 @@
 package com.tictactoe.presentation.composables
 
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.tictactoe.domain.MoveType
@@ -17,18 +19,19 @@ fun GameBoard(
     modifier: Modifier = Modifier,
     xColor: Color = Color.Green,
     oColor: Color = Color.Red,
+    onTap: (x: Int, y: Int) -> Unit
 //    onTapInField: (x: Int, y: Int) -> Unit
 ) {
     Canvas(
         modifier = modifier
-            .padding(10.dp),
-//            .pointerInput(true) {
-//                detectTapGestures {
-//                    val x = (3 * it.x.toInt() / size.width)
-//                    val y = (3 * it.y.toInt() / size.height)
-//                    onTapInField(x, y)
-//                }
-//            }
+            .padding(10.dp)
+            .pointerInput(true) {
+                detectTapGestures {
+                    val x = (3 * it.x.toInt() / size.width)
+                    val y = (3 * it.y.toInt() / size.height)
+                    onTap(x, y)
+                }
+            }
     ) {
         board()
         movesPlayed.forEachIndexed { y, _ ->
@@ -62,7 +65,7 @@ fun GameBoardPreview() {
             arrayOf(null, MoveType.O, MoveType.O),
             arrayOf(null, MoveType.X, null),
         ),
-//        onTapInField = { _, _ ->},
+        onTap = {_,_ ->},
         modifier = Modifier.size(300.dp),
     )
 }
