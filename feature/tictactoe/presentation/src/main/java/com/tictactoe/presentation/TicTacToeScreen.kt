@@ -28,6 +28,7 @@ import com.tictactoe.presentation.composables.ScoreBoard
 
 @Composable
 fun TicTacToeScreen(
+    events: (TicTacToeEvents) -> Unit,
     state: TicTacToeState,
 ) {
     Column(
@@ -38,28 +39,24 @@ fun TicTacToeScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceEvenly,
     ) {
-        if (state.players.isNotEmpty()) {
-            ScoreBoard(
-                modifier = Modifier.fillMaxWidth(),
-                xPlayer = state.players[0],
-                oPlayer = state.players[1],
-            )
-        }
-        state.currentPlayer?.let {
-            Text(
-                text = "${it.alias}'s turn",
-                fontSize = 24.sp,
-                fontStyle = FontStyle.Italic,
-                fontWeight = FontWeight.Bold,
-            )
-        }
+        ScoreBoard(
+            modifier = Modifier.fillMaxWidth(),
+            players = state.players,
+        )
+
+        Text(
+            text = state.currentPlayer?.let { "${it.alias}'s turn" } ?: "",
+            fontSize = 24.sp,
+            fontStyle = FontStyle.Italic,
+            fontWeight = FontWeight.Bold,
+        )
 
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .aspectRatio(1f)
                 .shadow(
-                    elevation = 4.dp,
+                    elevation = 1.dp,
                     shape = RoundedCornerShape(20.dp),
                 )
                 .clip(RoundedCornerShape(20.dp)),
@@ -69,6 +66,7 @@ fun TicTacToeScreen(
             GameBoard(
                 movesPlayed = state.movesPlayed,
                 modifier = Modifier.size(300.dp),
+                onTap = {x, y -> events(TicTacToeEvents.PlayMove(x,y)) },
             )
         }
 
@@ -78,7 +76,7 @@ fun TicTacToeScreen(
             QGButton(
                 modifier = Modifier.align(Alignment.CenterEnd),
                 textId = R.string.restart_game,
-                onClick = { /*TODO*/ },
+                onClick = { events(TicTacToeEvents.RestartGame) },
             )
         }
     }
@@ -88,6 +86,7 @@ fun TicTacToeScreen(
 @Composable
 private fun TicTacToeScreenPreview() {
     TicTacToeScreen(
+        events = {},
         state = TicTacToeState(
             players = listOf(Player.mockPlayer, Player.mockPlayer),
             currentPlayer = Player.mockPlayer,

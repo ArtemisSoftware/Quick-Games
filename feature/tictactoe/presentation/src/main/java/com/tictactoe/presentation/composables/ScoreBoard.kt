@@ -15,28 +15,29 @@ import com.tictactoe.domain.Player
 
 @Composable
 fun ScoreBoard(
-    oPlayer: Player,
-    xPlayer: Player,
+    players: List<Player>,
     modifier: Modifier = Modifier,
 ) {
-    Row(
-        modifier = modifier,
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        PlayerInfo(
-            player = oPlayer,
-            content = {
-                Circle(size = 20.dp)
-            },
-        )
-        BoardInfo(title = "Draw", points = "0")
-        PlayerInfo(
-            player = xPlayer,
-            content = {
-                Cross(crossSize = 20.dp)
-            },
-        )
+    if(players.isNotEmpty()) {
+        Row(
+            modifier = modifier,
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            PlayerInfo(
+                player = players[0],
+                content = {
+                    Circle(size = 20.dp)
+                },
+            )
+            BoardInfo(title = "Draw", points = "0")
+            PlayerInfo(
+                player = players[1],
+                content = {
+                    Cross(crossSize = 20.dp)
+                },
+            )
+        }
     }
 }
 
@@ -83,7 +84,6 @@ private fun BoardInfo(
 private fun ScoreBoardPreview() {
     ScoreBoard(
         modifier = Modifier.fillMaxWidth(),
-        xPlayer = Player.mockPlayer,
-        oPlayer = Player.mockPlayer,
+        players = listOf(Player.mockPlayer, Player.mockPlayer),
     )
 }
