@@ -17,6 +17,7 @@ import com.tictactoe.domain.models.VictoryType
 @Composable
 fun GameBoard(
     movesPlayed: Array<Array<MoveType?>>,
+    victoryType: VictoryType?,
     modifier: Modifier = Modifier,
     xColor: Color = Color.Green,
     oColor: Color = Color.Red,
@@ -53,7 +54,9 @@ fun GameBoard(
                 }
             }
         }
-        victoryLine(victoryType = VictoryType.VERTICAL_MIDDLE)
+        victoryType?.let {
+            victoryLine(victoryType = it)
+        }
     }
 }
 
@@ -67,6 +70,7 @@ fun GameBoardPreview() {
             arrayOf(null, MoveType.X, null),
         ),
         onTap = { _, _ -> },
+        victoryType = VictoryType.VERTICAL_RIGHT,
         modifier = Modifier.size(300.dp),
     )
 }

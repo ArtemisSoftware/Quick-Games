@@ -11,8 +11,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
 class TicTacToeViewModel constructor(
-    private val checkVictoryUseCase: CheckVictoryUseCase,
-    private val getPlayersUseCase: GetPlayersUseCase,
+    private val checkVictoryUseCase: CheckVictoryUseCase = CheckVictoryUseCase(),
+    private val getPlayersUseCase: GetPlayersUseCase = GetPlayersUseCase(),
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(TicTacToeState())

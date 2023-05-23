@@ -65,6 +65,7 @@ fun TicTacToeScreen(
             GameBoard(
                 movesPlayed = state.movesPlayed,
                 modifier = Modifier.size(300.dp),
+                victoryType = state.victoryType,
                 onTap = { x, y -> events(TicTacToeEvents.PlayMove(x, y)) },
             )
         }

@@ -21,19 +21,19 @@ class CheckVictoryUseCase {
                 movesPlayed[0][0] == moveType && movesPlayed[1][0] == moveType && movesPlayed[2][0] == moveType -> {
                     return VictoryType.VERTICAL_LEFT
                 }
-                movesPlayed[1][0] == moveType && movesPlayed[1][0] == moveType && movesPlayed[1][0] == moveType -> {
+                movesPlayed[1][0] == moveType && movesPlayed[1][1] == moveType && movesPlayed[1][2] == moveType -> {
                     return VictoryType.VERTICAL_MIDDLE
                 }
-                movesPlayed[2][0] == moveType && movesPlayed[2][0] == moveType && movesPlayed[2][0] == moveType -> {
+                movesPlayed[2][0] == moveType && movesPlayed[2][1] == moveType && movesPlayed[2][2] == moveType -> {
                     return VictoryType.VERTICAL_RIGHT
                 }
                 movesPlayed[0][0] == moveType && movesPlayed[1][1] == moveType && movesPlayed[2][2] == moveType -> {
                     return VictoryType.DIAGONAL_LEFT
                 }
                 movesPlayed[2][0] == moveType && movesPlayed[1][1] == moveType && movesPlayed[0][2] == moveType -> {
-                    return VictoryType.DIAGONAL_LEFT
+                    return VictoryType.DIAGONAL_RIGHT
                 }
-                !movesPlayed.any { it == null } -> {
+                movesPlayed.any { it == null } -> {
                     return VictoryType.DRAW
                 }
                 else -> return null
