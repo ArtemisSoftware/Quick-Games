@@ -1,6 +1,6 @@
 package com.tictactoe.presentation
 
-import com.tictactoe.domain.MoveType
+import com.tictactoe.domain.models.MoveType
 import com.tictactoe.domain.Player
 import com.tictactoe.domain.models.VictoryType
 

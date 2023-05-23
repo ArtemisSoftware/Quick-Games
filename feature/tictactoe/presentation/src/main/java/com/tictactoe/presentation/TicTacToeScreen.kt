@@ -9,22 +9,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.tictactoe.domain.MoveType
 import com.tictactoe.domain.Player
-import com.tictactoe.domain.models.VictoryType
+import com.tictactoe.domain.models.MoveType
 import com.tictactoe.presentation.composables.Announcement
 import com.tictactoe.presentation.composables.GameBoard
 import com.tictactoe.presentation.composables.QGButton
@@ -55,10 +48,10 @@ fun TicTacToeScreen(
                 .fillMaxWidth()
                 .aspectRatio(1f)
                 .shadow(
-                    elevation = 1.dp,
-                    shape = RoundedCornerShape(20.dp),
+                    elevation = 2.dp,
+                    shape = RoundedCornerShape(4.dp),
                 )
-                .clip(RoundedCornerShape(20.dp)),
+                .clip(RoundedCornerShape(4.dp)),
 //                .background(GrayBackground)
             contentAlignment = Alignment.Center,
         ) {
@@ -66,7 +59,9 @@ fun TicTacToeScreen(
                 movesPlayed = state.movesPlayed,
                 modifier = Modifier.size(300.dp),
                 victoryType = state.victoryType,
-                onTap = { x, y -> events(TicTacToeEvents.PlayMove(x, y)) },
+                onTap = { x, y ->
+                    events(TicTacToeEvents.PlayMove(x, y))
+                },
             )
         }
 

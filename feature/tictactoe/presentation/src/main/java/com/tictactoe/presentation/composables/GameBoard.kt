@@ -11,7 +11,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.tictactoe.domain.MoveType
+import com.tictactoe.domain.models.MoveType
 import com.tictactoe.domain.models.VictoryType
 
 @Composable
@@ -25,7 +25,7 @@ fun GameBoard(
 ) {
     Canvas(
         modifier = modifier
-            .padding(10.dp)
+            .padding(2.dp)
             .pointerInput(true) {
                 detectTapGestures {
                     val x = (3 * it.x.toInt() / size.width)
