@@ -36,6 +36,7 @@ private fun getStart(victoryType: VictoryType, size: Size): Offset {
         VictoryType.VERTICAL_RIGHT -> Offset(x = size.width * 5 / 6, y = 0f)
         VictoryType.DIAGONAL_RIGHT -> Offset(x = 0f, y = 0f)
         VictoryType.DIAGONAL_LEFT -> Offset(x = 0f, y = size.height)
+        VictoryType.DRAW -> Offset(x = 0f, y = 0f)
     }
 }
 
@@ -49,6 +50,7 @@ private fun getEnd(victoryType: VictoryType, size: Size): Offset {
         VictoryType.VERTICAL_RIGHT -> Offset(x = size.width * 5 / 6, y = size.height)
         VictoryType.DIAGONAL_RIGHT -> Offset(x = size.width, y = size.height)
         VictoryType.DIAGONAL_LEFT -> Offset(x = size.width, y = 0f)
+        VictoryType.DRAW -> Offset(x = 0f, y = 0f)
     }
 }
 
