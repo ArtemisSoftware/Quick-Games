@@ -15,6 +15,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -22,6 +24,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tictactoe.domain.MoveType
 import com.tictactoe.domain.Player
+import com.tictactoe.domain.models.VictoryType
+import com.tictactoe.presentation.composables.Announcement
 import com.tictactoe.presentation.composables.GameBoard
 import com.tictactoe.presentation.composables.QGButton
 import com.tictactoe.presentation.composables.ScoreBoard
@@ -44,12 +48,7 @@ fun TicTacToeScreen(
             players = state.players,
         )
 
-        Text(
-            text = state.currentPlayer?.let { "${it.alias}'s turn" } ?: "",
-            fontSize = 24.sp,
-            fontStyle = FontStyle.Italic,
-            fontWeight = FontWeight.Bold,
-        )
+        Announcement(victoryType = state.victoryType, currentPlayer = state.currentPlayer)
 
         Box(
             modifier = Modifier
@@ -66,7 +65,7 @@ fun TicTacToeScreen(
             GameBoard(
                 movesPlayed = state.movesPlayed,
                 modifier = Modifier.size(300.dp),
-                onTap = {x, y -> events(TicTacToeEvents.PlayMove(x,y)) },
+                onTap = { x, y -> events(TicTacToeEvents.PlayMove(x, y)) },
             )
         }
 
@@ -75,8 +74,10 @@ fun TicTacToeScreen(
         ) {
             QGButton(
                 modifier = Modifier.align(Alignment.CenterEnd),
-                textId = R.string.restart_game,
-                onClick = { events(TicTacToeEvents.RestartGame) },
+                textId = if (state.victoryType == null) R.string.restart_game else R.string.new_game,
+                onClick = {
+                    events(TicTacToeEvents.RestartGame)
+                },
             )
         }
     }

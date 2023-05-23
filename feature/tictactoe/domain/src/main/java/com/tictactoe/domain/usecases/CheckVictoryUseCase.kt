@@ -33,6 +33,9 @@ class CheckVictoryUseCase {
                 movesPlayed[2][0] == moveType && movesPlayed[1][1] == moveType && movesPlayed[0][2] == moveType -> {
                     return VictoryType.DIAGONAL_LEFT
                 }
+                !movesPlayed.any { it == null } -> {
+                    return VictoryType.DRAW
+                }
                 else -> return null
             }
         }

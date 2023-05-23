@@ -12,6 +12,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.tictactoe.domain.MoveType
+import com.tictactoe.domain.models.VictoryType
 
 @Composable
 fun GameBoard(
@@ -19,8 +20,7 @@ fun GameBoard(
     modifier: Modifier = Modifier,
     xColor: Color = Color.Green,
     oColor: Color = Color.Red,
-    onTap: (x: Int, y: Int) -> Unit
-//    onTapInField: (x: Int, y: Int) -> Unit
+    onTap: (x: Int, y: Int) -> Unit,
 ) {
     Canvas(
         modifier = modifier
@@ -31,7 +31,7 @@ fun GameBoard(
                     val y = (3 * it.y.toInt() / size.height)
                     onTap(x, y)
                 }
-            }
+            },
     ) {
         board()
         movesPlayed.forEachIndexed { y, _ ->
@@ -53,6 +53,7 @@ fun GameBoard(
                 }
             }
         }
+        victoryLine(victoryType = VictoryType.VERTICAL_MIDDLE)
     }
 }
 
@@ -65,7 +66,7 @@ fun GameBoardPreview() {
             arrayOf(null, MoveType.O, MoveType.O),
             arrayOf(null, MoveType.X, null),
         ),
-        onTap = {_,_ ->},
+        onTap = { _, _ -> },
         modifier = Modifier.size(300.dp),
     )
 }

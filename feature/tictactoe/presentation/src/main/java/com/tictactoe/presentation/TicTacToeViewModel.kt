@@ -1,13 +1,18 @@
 package com.tictactoe.presentation
 
 import androidx.lifecycle.ViewModel
+import com.tictactoe.domain.MoveType
 import com.tictactoe.domain.Player
+import com.tictactoe.domain.models.VictoryType
+import com.tictactoe.domain.usecases.CheckVictoryUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
-class TicTacToeViewModel constructor() : ViewModel() {
+class TicTacToeViewModel constructor(
+    private val checkVictoryUseCase: CheckVictoryUseCase,
+) : ViewModel() {
 
     private val _state = MutableStateFlow(TicTacToeState())
     val state: StateFlow<TicTacToeState> = _state.asStateFlow()
@@ -36,33 +41,51 @@ class TicTacToeViewModel constructor() : ViewModel() {
         }
     }
 
-    private fun playMove(x: Int, y: Int) = with(_state) {
-        if (value.movesPlayed[y][x] == null) {
+    private fun playMove(x: Int, y: Int) = with(_state.value) {
+        if (movesPlayed[y][x] == null) {
+            currentPlayer?.let { currentPlayer ->
+
+                val newMoveSet = movesPlayed.clone()
+                newMoveSet[y][x] = currentPlayer.moveType
+
+                val victoryType = checkVictoryUseCase(movesPlayed = newMoveSet, player = currentPlayer)
+                updateMoveResult(victoryType = victoryType, movesPlayed = newMoveSet)
+            }
+        }
+    }
+
+    private fun updateMoveResult(victoryType: VictoryType?, movesPlayed: Array<Array<MoveType?>>) = with(_state) {
+        victoryType?.let { victory ->
+
             update {
-                val newMoveSet = it.movesPlayed.clone()
-                newMoveSet[y][x] = it.currentPlayer?.moveType
                 it.copy(
-                    movesPlayed = newMoveSet,
+                    movesPlayed = movesPlayed,
+                    victoryType = victory,
                 )
             }
-            changeTurn()
+
+            // TODO: save result
+        } ?: run {
+            update {
+                it.copy(
+                    movesPlayed = movesPlayed,
+                    currentPlayer = changeCurrentPlayer(),
+                )
+            }
         }
     }
 
     private fun restartGame() = with(_state) {
         update {
             it.copy(
-                currentPlayer = it.players[0],
+                currentPlayer = changeCurrentPlayer(),
                 movesPlayed = TicTacToeState.getEmptyMoveSet(),
+                victoryType = null,
             )
         }
     }
 
-    private fun changeTurn() = with(_state) {
-        update {
-            it.copy(
-                currentPlayer = it.players.find { player -> player.alias != it.currentPlayer?.alias } ?: it.players.first(),
-            )
-        }
+    private fun changeCurrentPlayer() = with(_state.value) {
+        players.find { player -> player.alias != currentPlayer?.alias } ?: players.first()
     }
 }
