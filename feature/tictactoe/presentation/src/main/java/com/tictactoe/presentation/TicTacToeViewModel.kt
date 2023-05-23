@@ -2,9 +2,9 @@ package com.tictactoe.presentation
 
 import androidx.lifecycle.ViewModel
 import com.tictactoe.domain.MoveType
-import com.tictactoe.domain.Player
 import com.tictactoe.domain.models.VictoryType
 import com.tictactoe.domain.usecases.CheckVictoryUseCase
+import com.tictactoe.domain.usecases.GetPlayersUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.update
 
 class TicTacToeViewModel constructor(
     private val checkVictoryUseCase: CheckVictoryUseCase,
+    private val getPlayersUseCase: GetPlayersUseCase,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(TicTacToeState())
@@ -32,12 +33,16 @@ class TicTacToeViewModel constructor(
         }
     }
 
-    private fun startGame() = with(_state) {
-        update {
-            it.copy(
-                players = listOf(Player.mockPlayer, Player.mockCpuPlayer),
-                currentPlayer = Player.mockPlayer,
-            )
+    private fun startGame() {
+        val result = getPlayersUseCase()
+
+        with(_state) {
+            update {
+                it.copy(
+                    players = result,
+                    currentPlayer = result[0],
+                )
+            }
         }
     }
 
