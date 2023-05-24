@@ -16,3 +16,4 @@ rootProject.name = "QuickGames"
 include ':app'
 include ':feature:tictactoe:presentation'
 include ':feature:tictactoe:domain'
+include ':feature:snake:presentation'
