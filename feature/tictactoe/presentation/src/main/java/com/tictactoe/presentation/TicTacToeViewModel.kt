@@ -2,6 +2,7 @@ package com.tictactoe.presentation
 
 import androidx.lifecycle.ViewModel
 import com.tictactoe.domain.Player
+import com.tictactoe.domain.models.Move
 import com.tictactoe.domain.models.MoveType
 import com.tictactoe.domain.models.VictoryType
 import com.tictactoe.domain.usecases.AiMoveUseCase
@@ -28,7 +29,7 @@ class TicTacToeViewModel constructor(
     fun onTriggerEvent(event: TicTacToeEvents) {
         when (event) {
             is TicTacToeEvents.PlayMove -> {
-                playMove(x = event.x, y = event.y)
+                playMove(move = event.move)
             }
             TicTacToeEvents.RestartGame -> {
                 restartGame()
@@ -49,12 +50,12 @@ class TicTacToeViewModel constructor(
         }
     }
 
-    private fun playMove(x: Int, y: Int) = with(_state.value) {
-        if (movesPlayed[y][x] == null && victoryType == null) {
+    private fun playMove(move: Move) = with(_state.value) {
+        if (movesPlayed[move.y][move.x] == null && victoryType == null) {
             currentPlayer?.let { currentPlayer ->
 
                 val newMoveSet = movesPlayed.clone()
-                newMoveSet[y][x] = currentPlayer.moveType
+                newMoveSet[move.y][move.x] = currentPlayer.moveType
 
                 val victoryType = checkVictoryUseCase(movesPlayed = newMoveSet, player = currentPlayer)
                 updateMoveResult(victoryType = victoryType, movesPlayed = newMoveSet)
@@ -90,7 +91,7 @@ class TicTacToeViewModel constructor(
 
     private fun aiTurn() {
         val move = aiMoveUseCase.invoke(_state.value.movesPlayed)
-        playMove(move.first, move.second)
+        playMove(move = move)
     }
 
     private fun restartGame() = with(_state) {

@@ -5,8 +5,7 @@ import com.tictactoe.domain.models.ai.Board
 import com.tictactoe.domain.models.ai.Cell
 import com.tictactoe.domain.models.ai.CellState
 
-fun Array<Array<MoveType?>>.toBoard(): Board{
-
+fun Array<Array<MoveType?>>.toBoard(): Board {
     val board: MutableMap<Cell, CellState> = mutableMapOf()
 
     this.forEachIndexed { y, _ ->
@@ -17,18 +16,16 @@ fun Array<Array<MoveType?>>.toBoard(): Board{
                     board[cell] = moves.toCellState()
                 }
             }
-
         }
     }
 
     return Board(
-        board = board
+        board = board,
     )
-
 }
 
-fun MoveType.toCellState(): CellState{
-    return when(this){
+fun MoveType.toCellState(): CellState {
+    return when (this) {
         MoveType.X -> CellState.Star
         MoveType.O -> CellState.Circle
     }

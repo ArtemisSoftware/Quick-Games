@@ -17,6 +17,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.tictactoe.domain.Player
+import com.tictactoe.domain.models.Move
 import com.tictactoe.domain.models.MoveType
 import com.tictactoe.presentation.composables.Announcement
 import com.tictactoe.presentation.composables.GameBoard
@@ -60,7 +61,7 @@ fun TicTacToeScreen(
                 modifier = Modifier.size(300.dp),
                 victoryType = state.victoryType,
                 onTap = { x, y ->
-                    events(TicTacToeEvents.PlayMove(x, y))
+                    events(TicTacToeEvents.PlayMove(Move(x = x, y = y)))
                 },
             )
         }

@@ -18,6 +18,8 @@ data class Board(private val board: MutableMap<Cell, CellState> = mutableMapOf()
         return true
     }
 
+    fun isCellAvailable(cell: Cell) = !board.containsKey(cell)
+
     /**
      * Find the next winning move for the current cell state
      *
