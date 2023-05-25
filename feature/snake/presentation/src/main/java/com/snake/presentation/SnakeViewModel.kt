@@ -2,6 +2,8 @@ package com.snake.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.snake.domain.models.Settings
+import com.snake.domain.usecases.GetGameSettingsUseCase
 import com.snake.presentation.composables.BOARD_SIZE
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,7 +14,9 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import java.util.Random
 
-class SnakeViewModel constructor() : ViewModel() {
+class SnakeViewModel constructor(
+    private val getGameSettingsUseCase: GetGameSettingsUseCase = GetGameSettingsUseCase()
+) : ViewModel() {
 
     private val _state = MutableStateFlow(SnakeState(food = Pair(5, 5), snake = listOf(Pair(7, 7))))
     val state = _state.asStateFlow()
@@ -20,7 +24,8 @@ class SnakeViewModel constructor() : ViewModel() {
     private val snakeLengthDefault = 1 // TODO: must come from data store
     private var snakeLength = snakeLengthDefault
 
-    private val speed = 350L
+    private var settings: Settings = getGameSettingsUseCase()
+    private var speed = settings.speed
 
     private val mutex = Mutex()
 
@@ -94,7 +99,7 @@ class SnakeViewModel constructor() : ViewModel() {
 
     private fun checkSnakeCrash(snake: List<Pair<Int, Int>>, newPosition: Pair<Int, Int>) {
         if (snake.contains(newPosition)) {
-            snakeLength = snakeLengthDefault
+            snakeLength = settings.initialSnakeSize
         }
     }
 }
