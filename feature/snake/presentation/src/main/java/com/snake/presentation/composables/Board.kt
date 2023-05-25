@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -33,17 +32,13 @@ fun Board(state: SnakeState) {
                 .border(2.dp, DarkGreen),
         )
 
-        Box(
-            Modifier
+        Fruit(
+            modifier = Modifier
                 .offset(
                     x = tileSize * state.food.first,
                     y = tileSize * state.food.second,
                 )
-                .size(tileSize)
-                .background(
-                    DarkGreen,
-                    CircleShape,
-                ),
+                .size(tileSize),
         )
 
         state.snake.forEach {

@@ -10,7 +10,7 @@ import com.snake.presentation.composables.GamePad
 @Composable
 fun SnakeScreen(
     state: SnakeState,
-    event: (SnakeEvents) ->Unit,
+    event: (SnakeEvents) -> Unit,
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
