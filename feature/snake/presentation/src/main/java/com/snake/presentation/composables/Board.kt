@@ -1,13 +1,11 @@
 package com.snake.presentation.composables
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -32,7 +30,7 @@ fun Board(state: SnakeState) {
                 .border(2.dp, DarkGreen),
         )
 
-        Fruit(
+        Food(
             modifier = Modifier
                 .offset(
                     x = tileSize * state.food.first,
@@ -42,14 +40,13 @@ fun Board(state: SnakeState) {
         )
 
         state.snake.forEach {
-            Box(
+            SnakeBody(
                 modifier = Modifier
-                    .offset(x = tileSize * it.first, y = tileSize * it.second)
-                    .size(tileSize)
-                    .background(
-                        DarkGreen,
-                        RoundedCornerShape(4.dp),
-                    ),
+                    .offset(
+                        x = tileSize * it.first,
+                        y = tileSize * it.second,
+                    )
+                    .size(tileSize),
             )
         }
     }
@@ -60,7 +57,7 @@ fun Board(state: SnakeState) {
 private fun BoardPreview() {
     Board(
         state = SnakeState(
-            food = Pair(5, 5),
+            food = Pair(6, 5),
             snake = listOf(Pair(7, 7)),
         ),
     )
