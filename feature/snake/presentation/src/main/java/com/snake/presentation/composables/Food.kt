@@ -15,15 +15,6 @@ import androidx.compose.ui.unit.dp
 fun Food(
     modifier: Modifier,
 ) {
-//    Box(
-//        Modifier
-//            .size(42.dp)
-//            .background(
-//                DarkGreen,
-//                CircleShape,
-//            ),
-//    )
-
     Icon(
         modifier = modifier
             .background(
