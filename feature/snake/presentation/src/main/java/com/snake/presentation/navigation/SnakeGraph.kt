@@ -30,4 +30,6 @@ sealed class SnakeDestination(val route: String) {
     object MainMenu : SnakeDestination(route = "MAIN_MENU")
 
     object Settings : SnakeDestination(route = "SETTINGS")
+    object Game : SnakeDestination(route = "GAME")
+    object HighScore : SnakeDestination(route = "HIGH_SCORE")
 }

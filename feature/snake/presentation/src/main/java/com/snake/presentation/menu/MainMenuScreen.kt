@@ -17,19 +17,47 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.snake.presentation.R
+import com.snake.presentation.composables.ManageUIEvents
 import com.snake.presentation.composables.QGButton
 import com.snake.presentation.composables.QGTopBar
-import com.snake.presentation.navigation.SnakeDestination
 import com.snake.presentation.ui.theme.SnakeTheme
+
+@Composable
+fun MainMenuScreen(
+    viewModel: MainMenuViewModel = hiltViewModel(),
+    navController: NavHostController,
+) {
+    MainMenuScreenContent(
+        event = viewModel::onTriggerEvent,
+    )
+
+    ManageUIEvents(
+        uiEvent = viewModel.uiEvent,
+        onNavigate = {
+            navController.navigate(route = it.route)
+        },
+        onPopBackStack = {
+            navController.popBackStack()
+        },
+    )
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainMenuScreen(navController: NavHostController) {
+private fun MainMenuScreenContent(
+    event: (MainMenuEvents) -> Unit,
+) {
     Scaffold(
         topBar = {
-            QGTopBar(textId = R.string.main_menu, onBackClicked = {})
+            QGTopBar(
+                textId = R.string.main_menu,
+                onBackClicked = {
+                    event(MainMenuEvents.PopBackStack)
+                },
+            )
         },
         content = { contentPadding ->
             Column(
@@ -73,7 +101,7 @@ fun MainMenuScreen(navController: NavHostController) {
                         .width(248.dp),
                     textId = R.string.settings,
                     onClick = {
-                              navController.navigate(route = SnakeDestination.Settings.route)
+                        event.invoke(MainMenuEvents.GoToSettings)
                     },
                 )
             }
@@ -83,8 +111,8 @@ fun MainMenuScreen(navController: NavHostController) {
 
 @Preview(showBackground = true)
 @Composable
-private fun MainMenuScreenPreview() {
+private fun MainMenuScreenContentPreview() {
     SnakeTheme {
-        //MainMenuScreen()
+        MainMenuScreenContent(event = {})
     }
 }

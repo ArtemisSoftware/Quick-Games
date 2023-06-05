@@ -15,7 +15,9 @@ import androidx.navigation.compose.rememberNavController
 import com.artemissoftware.quickgames.navigation.RootNavigationGraph
 import com.artemissoftware.quickgames.ui.theme.QuickGamesTheme
 import com.snake.presentation.SnakeViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     private val viewModel: SnakeViewModel by viewModels()
