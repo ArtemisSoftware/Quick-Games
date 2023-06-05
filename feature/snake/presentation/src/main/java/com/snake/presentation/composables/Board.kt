@@ -11,9 +11,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.snake.domain.models.Food
+import com.snake.domain.models.FoodType
 import com.snake.presentation.SnakeState
 
-val LightGreen = Color(0xFF8DA25A)
 val DarkGreen = Color(0xFF2D321D)
 const val BOARD_SIZE = 16
 
@@ -30,13 +31,14 @@ fun Board(state: SnakeState) {
                 .border(2.dp, DarkGreen),
         )
 
-        Food(
+        SnakeFood(
             modifier = Modifier
                 .offset(
-                    x = tileSize * state.food.first,
-                    y = tileSize * state.food.second,
+                    x = tileSize * state.food.position.first,
+                    y = tileSize * state.food.position.second,
                 )
                 .size(tileSize),
+            foodType = state.food.type
         )
 
         state.snake.forEach {
@@ -57,7 +59,7 @@ fun Board(state: SnakeState) {
 private fun BoardPreview() {
     Board(
         state = SnakeState(
-            food = Pair(6, 5),
+            food = Food(Pair(6, 5), FoodType.NEON),
             snake = listOf(Pair(7, 7)),
         ),
     )

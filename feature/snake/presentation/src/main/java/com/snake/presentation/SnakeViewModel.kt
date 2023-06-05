@@ -2,6 +2,8 @@ package com.snake.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.snake.domain.models.Food
+import com.snake.domain.models.FoodType
 import com.snake.domain.models.Settings
 import com.snake.domain.usecases.GetGameSettingsUseCase
 import com.snake.presentation.composables.BOARD_SIZE
@@ -18,7 +20,12 @@ class SnakeViewModel constructor(
     private val getGameSettingsUseCase: GetGameSettingsUseCase = GetGameSettingsUseCase()
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(SnakeState(food = Pair(5, 5), snake = listOf(Pair(7, 7))))
+    private val _state = MutableStateFlow(
+        SnakeState(
+            food = Food(position = Pair(5, 5), type = FoodType.FRUIT),
+            snake = listOf(Pair(7, 7))
+        )
+    )
     val state = _state.asStateFlow()
 
     private val snakeLengthDefault = 1 // TODO: must come from data store
@@ -65,7 +72,7 @@ class SnakeViewModel constructor(
                     checkSnakeCrash(snake = it.snake, newPosition = newPosition)
 
                     it.copy(
-                        food = getFoodPosition(foodPosition = it.food, newPosition = newPosition),
+                        food = getFoodPosition(food = it.food, newPosition = newPosition),
                         snake = listOf(newPosition) + it.snake.take(snakeLength - 1),
                     )
                 }
@@ -80,19 +87,22 @@ class SnakeViewModel constructor(
         )
     }
 
-    private fun getFoodPosition(foodPosition: Pair<Int, Int>, newPosition: Pair<Int, Int>): Pair<Int, Int> {
-        return if (newPosition == foodPosition) {
-            Pair(
-                Random().nextInt(BOARD_SIZE),
-                Random().nextInt(BOARD_SIZE),
+    private fun getFoodPosition(food: Food, newPosition: Pair<Int, Int>): Food {
+        return if (newPosition == food.position) {
+            Food(
+                position = Pair(
+                    Random().nextInt(BOARD_SIZE),
+                    Random().nextInt(BOARD_SIZE),
+                ),
+                type = FoodType.values().random()
             )
         } else {
-            foodPosition
+            food
         }
     }
 
-    private fun checkSnakeEatFruit(food: Pair<Int, Int>, newPosition: Pair<Int, Int>) {
-        if (newPosition == food) {
+    private fun checkSnakeEatFruit(food: Food, newPosition: Pair<Int, Int>) {
+        if (newPosition == food.position) {
             snakeLength++
         }
     }
