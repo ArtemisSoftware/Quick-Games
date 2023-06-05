@@ -17,14 +17,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.snake.presentation.R
 import com.snake.presentation.composables.QGButton
 import com.snake.presentation.composables.QGTopBar
+import com.snake.presentation.navigation.SnakeDestination
 import com.snake.presentation.ui.theme.SnakeTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainMenuScreen(/*navController: NavHostController*/) {
+fun MainMenuScreen(navController: NavHostController) {
     Scaffold(
         topBar = {
             QGTopBar(textId = R.string.main_menu, onBackClicked = {})
@@ -71,6 +73,7 @@ fun MainMenuScreen(/*navController: NavHostController*/) {
                         .width(248.dp),
                     textId = R.string.settings,
                     onClick = {
+                              navController.navigate(route = SnakeDestination.Settings.route)
                     },
                 )
             }
@@ -82,6 +85,6 @@ fun MainMenuScreen(/*navController: NavHostController*/) {
 @Composable
 private fun MainMenuScreenPreview() {
     SnakeTheme {
-        MainMenuScreen()
+        //MainMenuScreen()
     }
 }
