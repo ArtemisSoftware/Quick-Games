@@ -4,6 +4,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.snake.presentation.SnakeScreen
 import com.snake.presentation.menu.MainMenuScreen
 import com.snake.presentation.setting.SettingScreen
 
@@ -14,6 +15,10 @@ fun NavGraphBuilder.snakeGraph(navController: NavHostController) {
     ) {
         composable(route = SnakeDestination.MainMenu.route) {
             MainMenuScreen(navController = navController)
+        }
+
+        composable(route = SnakeDestination.Game.route) {
+            SnakeScreen(navController = navController)
         }
 
         composable(route = SnakeDestination.Settings.route) {

@@ -85,6 +85,7 @@ private fun MainMenuScreenContent(
                         .padding(top = 64.dp),
                     textId = R.string.new_game,
                     onClick = {
+                        event.invoke(MainMenuEvents.GoToGame)
                     },
                 )
 

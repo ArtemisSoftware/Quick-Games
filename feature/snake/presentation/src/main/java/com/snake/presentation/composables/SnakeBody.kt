@@ -21,16 +21,31 @@ import androidx.compose.ui.graphics.drawscope.inset
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.snake.domain.models.FoodType
 
 @Composable
 fun SnakeBody(
     modifier: Modifier = Modifier,
+    foodType: FoodType,
+) {
+
+    when (foodType) {
+        FoodType.NEON -> NeonBody(modifier = modifier)
+        FoodType.HAMBURGER -> SnakeBody(modifier = modifier, color = listOf(Color.Green, Color.Yellow))
+        FoodType.FRUIT -> SnakeBody(modifier = modifier, color = listOf(Color.Red, Color.Magenta))
+    }
+}
+
+@Composable
+private fun SnakeBody(
+    modifier: Modifier = Modifier,
+    color: List<Color>,
 ) {
     Box(
         modifier = modifier
             .background(
                 brush = Brush.radialGradient(
-                    colors = listOf(Color.Green, Color.Yellow), // center
+                    colors = color,
                 ),
                 shape = RoundedCornerShape(4.dp),
             ),
@@ -38,10 +53,17 @@ fun SnakeBody(
 }
 
 @Composable
-private fun NeonSample() {
+private fun NeonBody(
+    modifier: Modifier = Modifier,
+) {
+    val color = Color.Red
+
+    val transparent = color
+        .copy(alpha = 0f)
+        .toArgb()
+
     Box(
-        modifier = Modifier
-            .size(42.dp)
+        modifier = modifier
             .background(Color.Black, shape = RoundedCornerShape(4.dp)),
     ) {
         val paint = remember {
@@ -54,12 +76,6 @@ private fun NeonSample() {
         val frameworkPaint = remember {
             paint.asFrameworkPaint()
         }
-
-        val color = Color.Red
-
-        val transparent = color
-            .copy(alpha = 0f)
-            .toArgb()
 
         frameworkPaint.color = transparent
 
@@ -103,7 +119,8 @@ private fun SnakeBodyPreview() {
         SnakeBody(
             modifier = Modifier
                 .size(42.dp),
+            foodType = FoodType.FRUIT,
         )
-        NeonSample()
+        NeonBody()
     }
 }

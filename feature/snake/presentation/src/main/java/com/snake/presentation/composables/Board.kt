@@ -38,17 +38,18 @@ fun Board(state: SnakeState) {
                     y = tileSize * state.food.position.second,
                 )
                 .size(tileSize),
-            foodType = state.food.type
+            foodType = state.food.type,
         )
 
         state.snake.forEach {
             SnakeBody(
                 modifier = Modifier
                     .offset(
-                        x = tileSize * it.first,
-                        y = tileSize * it.second,
+                        x = tileSize * it.position.first,
+                        y = tileSize * it.position.second,
                     )
                     .size(tileSize),
+                foodType = it.type,
             )
         }
     }
@@ -60,7 +61,10 @@ private fun BoardPreview() {
     Board(
         state = SnakeState(
             food = Food(Pair(6, 5), FoodType.NEON),
-            snake = listOf(Pair(7, 7)),
+            snake = listOf(
+                Food(Pair(7, 7), FoodType.FRUIT),
+                Food(Pair(7, 8), FoodType.NEON),
+            ),
         ),
     )
 }
